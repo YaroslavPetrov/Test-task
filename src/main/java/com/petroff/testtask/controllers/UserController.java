@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -37,28 +37,13 @@ public class UserController {
         return userService.changeStatus(id, newStatus);
     }
 
-    @GetMapping("/findByStatusTimestamp")
-    public List<User> getByStatusTimestamp(@PathParam("status") Boolean status, @PathParam("timestamp") @ModelAttribute Instant timestamp){
-        return userService.findByStatusTimestamp(status, timestamp);
-    }
-
-    @GetMapping("/findByName")
-    public List<User> getByName(@PathParam("name") String name){
-        return userService.findAllByName(name);
-    }
-
-    @GetMapping("/findByStatus")
-    public List<User> getByStatus(@PathParam("status") Boolean status){
-        return userService.findAllByStatus(status);
-    }
-
     @ModelAttribute
-    Instant changeTime() {
-        return Instant.now();
+    LocalDateTime changeTime() {
+        return LocalDateTime.parse("2019-03-19T15:10:46.625");
     }
 
     @GetMapping("/findByCT")
-    public List<User> getByCT(@PathParam("changeTime") @ModelAttribute Instant changeTime){
+    public List<User> getByCT(@PathParam("changeTime") @ModelAttribute LocalDateTime changeTime){
         return userService.findAllByChangeTime(changeTime);
     }
 

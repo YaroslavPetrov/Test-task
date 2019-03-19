@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -25,7 +25,7 @@ public class User{
     private String firstName;
     private String lastName;
     private Boolean status;
-    private Instant changeTime;
+    private LocalDateTime changeTime;
     private String imageUri;
 
 }

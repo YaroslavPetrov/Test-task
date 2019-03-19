@@ -7,7 +7,7 @@ import com.petroff.testtask.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +24,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public Long addUser(User user) {
         externalApiRequest();
-        //todo убрать
-        user.setChangeTime(Instant.now());
+        user.setChangeTime(LocalDateTime.parse("2019-03-19T15:10:46.625"));
         return userRepository.save(user).getId();
     }
 
@@ -41,32 +40,13 @@ public class UserServiceImpl implements UserService{
         User user = getUser(id);
         Boolean oldStatus = user.getStatus();
         user.setStatus(status);
-        user.setChangeTime(Instant.now());
+        user.setChangeTime(LocalDateTime.parse("2019-03-19T15:10:46.625"));
         userRepository.save(user);
         return new UserStatusDto(user, oldStatus);
     }
 
-    //todo убрать
     @Override
-    public List<User> findByStatusTimestamp(Boolean status, Instant timestamp) {
-        return userRepository.findAllByStatusAndChangeTimeAfter(status, timestamp);
-    }
-
-    //todo убрать
-    @Override
-    public List<User> findAllByName(String name) {
-        return userRepository.findAllByFirstName(name);
-    }
-
-    //todo убрать
-    @Override
-    public List<User> findAllByStatus(Boolean status) {
-        return userRepository.findAllByStatus(status);
-    }
-
-
-    @Override
-    public List<User> findAllByChangeTime(Instant changeTime) {
+    public List<User> findAllByChangeTime(LocalDateTime changeTime) {
         ArrayList<User> list = new ArrayList<>(userRepository.findAllByChangeTime(changeTime));
         System.out.println("Okay");
         return userRepository.findAllByChangeTime(changeTime);
