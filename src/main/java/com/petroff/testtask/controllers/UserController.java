@@ -1,15 +1,17 @@
 package com.petroff.testtask.controllers;
 
+import com.petroff.testtask.dto.StatisticDtoOut;
 import com.petroff.testtask.dto.UserStatusDto;
 import com.petroff.testtask.model.User;
 import com.petroff.testtask.repositories.UserRepository;
 import com.petroff.testtask.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 import java.time.LocalDateTime;
-import java.util.List;
+
 
 @RestController
 @RequestMapping("/user")
@@ -37,14 +39,9 @@ public class UserController {
         return userService.changeStatus(id, newStatus);
     }
 
-    @ModelAttribute
-    LocalDateTime changeTime() {
-        return LocalDateTime.parse("2019-03-19T15:10:46.625");
-    }
-
-    @GetMapping("/findByCT")
-    public List<User> getByCT(@PathParam("changeTime") @ModelAttribute LocalDateTime changeTime){
-        return userService.findAllByChangeTime(changeTime);
+    @GetMapping("/findByST")
+    public StatisticDtoOut getByST(@RequestParam(required = false) Boolean status, @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime id) {
+        return userService.findAllByStatusChangeTime(status, id);
     }
 
 }

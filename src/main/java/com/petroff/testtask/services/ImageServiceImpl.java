@@ -9,14 +9,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
-public class ImageServiceImpl implements ImageService{
+public class ImageServiceImpl implements ImageService {
 
 
     @Override
     public String uploadImage(MultipartFile imageFile) {
         String folder = "\\images\\";
         Path folderPath = Paths.get(folder);
-        if(Files.notExists(folderPath)){
+        if (Files.notExists(folderPath)) {
             try {
                 Files.createDirectory(folderPath);
             } catch (IOException e) {

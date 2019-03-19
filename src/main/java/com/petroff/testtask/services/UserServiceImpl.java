@@ -1,5 +1,6 @@
 package com.petroff.testtask.services;
 
+import com.petroff.testtask.dto.StatisticDtoOut;
 import com.petroff.testtask.dto.UserStatusDto;
 import com.petroff.testtask.exceptions.UserNotFoundException;
 import com.petroff.testtask.model.User;
@@ -8,11 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
@@ -24,7 +23,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public Long addUser(User user) {
         externalApiRequest();
-        user.setChangeTime(LocalDateTime.parse("2019-03-19T15:10:46.625"));
+        user.setChangeTime(LocalDateTime.now());
         return userRepository.save(user).getId();
     }
 
@@ -40,20 +39,25 @@ public class UserServiceImpl implements UserService{
         User user = getUser(id);
         Boolean oldStatus = user.getStatus();
         user.setStatus(status);
-        user.setChangeTime(LocalDateTime.parse("2019-03-19T15:10:46.625"));
+        user.setChangeTime(LocalDateTime.now());
         userRepository.save(user);
         return new UserStatusDto(user, oldStatus);
     }
 
     @Override
-    public List<User> findAllByChangeTime(LocalDateTime changeTime) {
-        ArrayList<User> list = new ArrayList<>(userRepository.findAllByChangeTime(changeTime));
-        System.out.println("Okay");
-        return userRepository.findAllByChangeTime(changeTime);
+    public StatisticDtoOut findAllByStatusChangeTime(Boolean status, LocalDateTime id) {
+        if (id != null && status != null) {
+            return new StatisticDtoOut(LocalDateTime.now(), userRepository.findAllByStatusAndChangeTimeAfter(status, id));
+        } else if (status != null) {
+            return new StatisticDtoOut(LocalDateTime.now(), userRepository.findAllByStatus(status));
+        } else {
+            return new StatisticDtoOut(LocalDateTime.now(), userRepository.findAll());
+        }
     }
 
+
     //todo раскомментить
-    private void externalApiRequest(){
+    private void externalApiRequest() {
 //        try {
 //            Thread.sleep(5000);
 //        } catch (InterruptedException e) {
