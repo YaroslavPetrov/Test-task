@@ -56,12 +56,11 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    //todo раскомментить
     private void externalApiRequest() {
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
