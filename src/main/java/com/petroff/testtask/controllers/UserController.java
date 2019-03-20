@@ -3,7 +3,6 @@ package com.petroff.testtask.controllers;
 import com.petroff.testtask.dto.StatisticDtoOut;
 import com.petroff.testtask.dto.UserStatusDto;
 import com.petroff.testtask.model.User;
-import com.petroff.testtask.repositories.UserRepository;
 import com.petroff.testtask.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,7 +19,7 @@ public class UserController {
     private final UserServiceImpl userService;
 
     @Autowired
-    public UserController(UserServiceImpl userService, UserRepository userRepository) {
+    public UserController(UserServiceImpl userService) {
         this.userService = userService;
     }
 
