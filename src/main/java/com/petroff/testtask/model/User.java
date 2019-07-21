@@ -27,5 +27,6 @@ public class User {
     private Boolean status;
     private LocalDateTime changeTime;
     private String imageUri;
+    private String someNewField;
 
 }
